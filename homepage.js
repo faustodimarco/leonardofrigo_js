@@ -36,7 +36,7 @@ gsap.to("[animation=vid01]", {
 
 // ---------------------------------------------------- // Hero Heading & Paragraph Animation
 
-var heroTl = gsap.timeline({ delay: 4.5 });
+var heroTl = gsap.timeline({ delay: 0.1 });
 
 heroTl.from("[animation=hero_h] .line", {
   y: "100%",
