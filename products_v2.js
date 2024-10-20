@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document
     .querySelectorAll("[notFlash]")
     .forEach((el) => el.removeAttribute("notFlash"));
-
+  
   // Initialize GSAP animations
   initGSAP();
 });
@@ -29,3 +29,4 @@ function initGSAP() {
       stagger: defaults.stagger,
     });
   });
+}
