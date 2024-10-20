@@ -1,307 +1,262 @@
-// ---------------------------------------------------- // Text Splitter
+// Wait for DOM content to be loaded
+document.addEventListener("DOMContentLoaded", () => {
+  // Remove 'notFlash' attribute
+  document
+    .querySelectorAll("[notFlash]")
+    .forEach((el) => el.removeAttribute("notFlash"));
 
-let typeSplit = new SplitType("[split]", {
-  types: "lines, words, chars",
-  tagName: "span",
+  // Initialize GSAP animations
+  initGSAP();
 });
 
-// ---------------------------------------------------- // Slick Slider
+function initGSAP() {
+  const defaults = {
+    stagger: 0.07,
+    duration: 0.5,
+    durationFast: 0.35,
+    durationNavbar: 0.25,
+    ease: "power1.out",
+  };
 
+  // Hero Video Animation
+  gsap.to("[animation=vid01]", {
+    scale: 0.75,
+    borderRadius: "100%",
+    ease: defaults.ease,
+    scrollTrigger: {
+      trigger: "[trigger=tr01]",
+      start: "top top",
+      end: "center top",
+      scrub: true,
+    },
+  });
+
+  // Hero Heading & Paragraph Animation
+  const heroTl = gsap.timeline({ delay: 0.25 });
+  ["hero_h", "hero_p"].forEach((selector) => {
+    heroTl.from(`[animation=${selector}] .line`, {
+      y: "100%",
+      opacity: 0,
+      duration: defaults.durationFast,
+      ease: defaults.ease,
+      stagger: defaults.stagger,
+    });
+  });
+
+  // About Timeline and Animations
+  const s02Tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: "[trigger=nav]",
+      start: "top top",
+    },
+  });
+
+  s02Tl.fromTo(
+    "[animation=brd01]",
+    { clipPath: "polygon(0 0, 0 0, 0 100%, 0 100%)" },
+    {
+      clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
+      duration: defaults.durationFast,
+      ease: defaults.ease,
+    },
+    0
+  );
+
+  // Navbar Animation
+  gsap.from(".navbar-w", {
+    y: "-100%",
+    duration: defaults.durationNavbar,
+    ease: defaults.ease,
+    scrollTrigger: {
+      trigger: "[trigger=nav]",
+      start: "top top",
+      toggleActions: "play none none reverse",
+    },
+  });
+
+  // Navbar Color Change
+  const colorThemes = {
+    1: {
+      /* light theme colors */
+    },
+    2: {
+      /* dark theme colors */
+    },
+  };
+
+  document.querySelectorAll("section[data-theme]").forEach((section) => {
+    ScrollTrigger.create({
+      trigger: section,
+      start: "top top",
+      end: "bottom top",
+      onToggle: ({ isActive }) => {
+        if (isActive) {
+          const theme = section.dataset.theme === "dark" ? 2 : 1;
+          gsap.to(".navbar", { ...colorThemes[theme], duration: 0.3 });
+        }
+      },
+    });
+  });
+
+  // Reusable animation function
+  const animateLines = (selector, trigger, start = "center bottom") => {
+    gsap.from(`[animation=${selector}] .line`, {
+      y: "100%",
+      opacity: 0,
+      duration: defaults.durationFast,
+      ease: defaults.ease,
+      stagger: defaults.stagger,
+      scrollTrigger: {
+        trigger: `[trigger=${trigger}]`,
+        start: start,
+      },
+    });
+  };
+
+  // Section 03 Animations
+  animateLines("s03_h", "tr03");
+
+  const s03Tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: "[trigger=tr03]",
+      start: "center center",
+    },
+  });
+
+  s03Tl
+    .from("[animation=s03_p] .line", {
+      y: "100%",
+      opacity: 0,
+      duration: defaults.durationFast,
+      ease: defaults.ease,
+      stagger: defaults.stagger,
+    })
+    .from(
+      "[animation=s03_link] .line",
+      {
+        y: "100%",
+        opacity: 0,
+        duration: defaults.durationFast,
+        ease: defaults.ease,
+        stagger: defaults.stagger,
+      },
+      1
+    )
+    .from(
+      "[animation=s03_line]",
+      {
+        width: "0%",
+        duration: defaults.durationFast,
+      },
+      1
+    )
+    .from(
+      "[animation=img01]",
+      {
+        borderBottomLeftRadius: "0%",
+        duration: defaults.duration,
+        ease: defaults.ease,
+      },
+      1
+    );
+
+  // Section 04 Animations
+  const s04Tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: "[trigger=tr04]",
+      start: "40% bottom",
+    },
+  });
+
+  ["s04_h", "s04_h2", "s04_p"].forEach((selector) => {
+    s04Tl.from(
+      `[animation=${selector}] ${selector.includes("h2") ? ".char" : ".line"}`,
+      {
+        y: "100%",
+        opacity: 0,
+        duration: defaults.durationFast,
+        ease: defaults.ease,
+        stagger: defaults.stagger,
+      }
+    );
+  });
+
+  gsap
+    .timeline({
+      scrollTrigger: {
+        trigger: "[trigger=tr04]",
+        start: "70% bottom",
+      },
+    })
+    .from("[animation=s04_img]", {
+      scale: 0.5,
+      borderRadius: "100%",
+      duration: defaults.durationFast,
+      ease: "power1.in",
+    });
+
+  // Section 05 Animations
+  animateLines("s05_h", "tr05");
+
+  const s05Tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: "[trigger=tr05]",
+      start: "center center",
+    },
+  });
+
+  s05Tl
+    .from("[animation=s05_p] .line", {
+      y: "100%",
+      opacity: 0,
+      duration: defaults.durationFast,
+      ease: defaults.ease,
+      stagger: defaults.stagger,
+    })
+    .from(
+      "[animation=s05_link] .line",
+      {
+        y: "100%",
+        opacity: 0,
+        duration: defaults.durationFast,
+        ease: defaults.ease,
+        stagger: defaults.stagger,
+      },
+      0
+    )
+    .from(
+      "[animation=s05_line]",
+      {
+        width: "0%",
+        duration: defaults.durationFast,
+      },
+      0
+    )
+    .from(
+      "[animation=s05_img]",
+      {
+        borderTopRightRadius: "0%",
+        duration: defaults.duration,
+        ease: defaults.ease,
+      },
+      0
+    );
+}
+
+// Slick Slider initialization (moved outside of DOMContentLoaded for performance)
 $("#material_slick").slick({
   infinite: true,
-  //variableWidth: true,
   slidesToShow: 1,
   swipe: true,
   arrows: false,
   swipeToSlide: true,
-  //focusOnSelect: true,
-  //centerMode: true,
   autoplay: true,
   autoplaySpeed: 1000,
 });
 
-// ---------------------------------------------------- // Hero Video Animation
-
-gsap.to("[animation=vid01]", {
-  scale: 0.75,
-  borderRadius: "100%",
-  ease: "power1.out",
-  scrollTrigger: {
-    trigger: "[trigger=tr01]",
-    start: "top top",
-    end: "center top",
-    scrub: true,
-  },
+// Text Splitter (moved outside of DOMContentLoaded for performance)
+new SplitType("[split]", {
+  types: "lines, words, chars",
+  tagName: "span",
 });
 
-// ---------------------------------------------------- // Hero Heading & Paragraph Animation
-
-var heroTl = gsap.timeline({ delay: 0.1 });
-
-heroTl.from("[animation=hero_h] .line", {
-  y: "100%",
-  opacity: 0,
-  duration: 0.5,
-  ease: "power1.out",
-  stagger: 0.1,
-});
-
-heroTl.from("[animation=hero_p] .line", {
-  y: "100%",
-  opacity: 0,
-  duration: 0.5,
-  ease: "power1.out",
-  stagger: 0.1,
-});
-
-// ---------------------------------------------------- // About Timeline
-
-var s02Tl = gsap.timeline({
-  scrollTrigger: {
-    trigger: "[trigger=nav]",
-    start: "top top",
-  },
-});
-
-// ---------------------------------------------------- // About Border Animation
-
-s02Tl.fromTo(
-  "[animation=brd01]",
-  {
-    clipPath: "polygon(0 0, 0 0, 0 100%, 0 100%)",
-  },
-  {
-    clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
-    duration: 0.5,
-    ease: "power1.out",
-  },
-  0
-);
-
-// ---------------------------------------------------- // Navbar Animation & Color
-
-s02Tl.from(".navbar-w", {
-  y: "-100%",
-  duration: 0.25,
-  ease: "power1.out",
-});
-
-$("section[data-theme]").each(function () {
-  let theme = 1;
-  if ($(this).attr("data-theme") === "dark") theme = 2;
-
-  ScrollTrigger.create({
-    trigger: $(this),
-    start: "top top",
-    end: "bottom top",
-    onToggle: ({ self, isActive }) => {
-      if (isActive)
-        gsap.to(".navbar", { ...colorThemes[theme], duration: 0.3 });
-    },
-  });
-});
-
-// ---------------------------------------------------- // Section 03 Heading Animation
-
-gsap.from("[animation=s03_h] .line", {
-  y: "100%",
-  opacity: 0,
-  duration: 0.5,
-  ease: "power1.out",
-  stagger: 0.1,
-  scrollTrigger: {
-    trigger: "[trigger=tr03]",
-    start: "center bottom",
-  },
-});
-
-// ---------------------------------------------------- // Section 03 Timeline
-
-var s03Tl = gsap.timeline({
-  scrollTrigger: {
-    trigger: "[trigger=tr03]",
-    start: "center center",
-  },
-});
-
-// ---------------------------------------------------- // Section 03 Paragraph Animation
-
-s03Tl.from("[animation=s03_p] .line", {
-  y: "100%",
-  opacity: 0,
-  duration: 0.5,
-  ease: "power1.out",
-  stagger: 0.1,
-});
-
-// ---------------------------------------------------- // Section 03 Link Animation
-
-s03Tl.from(
-  "[animation=s03_link] .char",
-  {
-    y: "100%",
-    opacity: 0,
-    duration: 0.25,
-    ease: "power1.out",
-    stagger: 0.05,
-  },
-  1
-);
-
-s03Tl.from(
-  "[animation=s03_line]",
-  {
-    width: "0%",
-    duration: 0.25,
-  },
-  1
-);
-
-// ---------------------------------------------------- // Section 03 Image Corner Animation
-
-s03Tl.from(
-  "[animation=img01]",
-  {
-    borderBottomLeftRadius: "0%",
-    duration: 1,
-    ease: "power1.out",
-  },
-  1
-);
-
-// ---------------------------------------------------- // Section 04 Timeline
-
-var s04Tl = gsap.timeline({
-  scrollTrigger: {
-    trigger: "[trigger=tr04]",
-    start: "40% bottom",
-  },
-});
-
-// ---------------------------------------------------- // Section 04 Heading
-
-s04Tl.from("[animation=s04_h] .line", {
-  y: "100%",
-  opacity: 0,
-  duration: 0.5,
-  ease: "power1.out",
-  stagger: 0.1,
-});
-
-s04Tl.from("[animation=s04_h2] .char", {
-  y: "100%",
-  opacity: 0,
-  duration: 0.5,
-  ease: "power1.out",
-  stagger: 0.1,
-});
-
-// ---------------------------------------------------- // Section 04 Paragraph
-
-s04Tl.from("[animation=s04_p] .line", {
-  y: "100%",
-  opacity: 0,
-  duration: 0.5,
-  ease: "power1.out",
-  stagger: 0.1,
-});
-
-// ---------------------------------------------------- // Section 04 imageElements
-
-var s04imgTl = gsap.timeline({
-  scrollTrigger: {
-    trigger: "[trigger=tr04]",
-    start: "70% bottom",
-    stagger: 0.5,
-  },
-});
-
-s04imgTl.from("[animation=s04_img]", {
-  scale: 0.5,
-  duration: 0.5,
-  ease: "power1.in",
-});
-
-s04imgTl.from("[animation=s04_img]", {
-  borderRadius: "100%",
-  duration: 0.5,
-  ease: "power1.in",
-});
-
-// ---------------------------------------------------- // Section 05 Heading Animation
-
-gsap.from("[animation=s05_h] .line", {
-  y: "100%",
-  opacity: 0,
-  duration: 0.5,
-  ease: "power1.out",
-  stagger: 0.1,
-  scrollTrigger: {
-    trigger: "[trigger=tr05]",
-    start: "center bottom",
-  },
-});
-
-// ---------------------------------------------------- // Section 05 Timeline
-
-var s05Tl = gsap.timeline({
-  scrollTrigger: {
-    trigger: "[trigger=tr05]",
-    start: "center center",
-  },
-});
-
-// ---------------------------------------------------- // Section 05 Paragraph Animation
-
-s05Tl.from("[animation=s05_p] .line", {
-  y: "100%",
-  opacity: 0,
-  duration: 0.5,
-  ease: "power1.out",
-  stagger: 0.1,
-});
-
-// ---------------------------------------------------- // Section 05 Link Animation
-
-s05Tl.from(
-  "[animation=s05_link] .char",
-  {
-    y: "100%",
-    opacity: 0,
-    duration: 0.25,
-    ease: "power1.out",
-    stagger: 0.05,
-  },
-  0
-);
-
-s05Tl.from(
-  "[animation=s05_line]",
-  {
-    width: "0%",
-    duration: 0.25,
-  },
-  0
-);
-
-// ---------------------------------------------------- // Section 05 Image Corner Animation
-
-s05Tl.from(
-  "[animation=s05_img]",
-  {
-    borderTopRightRadius: "0%",
-    duration: 1,
-    ease: "power1.out",
-  },
-  0
-);
-
-// ---------------------------------------------------- // Section 06
-
-var s06Tl = gsap.timeline({
-  scrollTrigger: {
-    trigger: "[trigger=tr04]",
-    start: "70% bottom",
-    stagger: 0.5,
-  },
-});
