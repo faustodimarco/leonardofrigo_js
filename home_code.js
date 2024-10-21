@@ -1,12 +1,19 @@
+// Function to check if the device is desktop
+function isDesktop() {
+  return window.matchMedia("(min-width: 1024px)").matches;
+}
+
 // Wait for DOM content to be loaded
 document.addEventListener("DOMContentLoaded", () => {
-  // Remove 'notFlash' attribute
-  document
-    .querySelectorAll("[notFlash]")
-    .forEach((el) => el.removeAttribute("notFlash"));
+  if (isDesktop()) {
+    // Remove 'notFlash' attribute only on desktop
+    document
+      .querySelectorAll("[notFlash]")
+      .forEach((el) => el.removeAttribute("notFlash"));
 
-  // Initialize GSAP animations
-  initGSAP();
+    // Initialize GSAP animations only on desktop
+    initGSAP();
+  }
 });
 
 function initGSAP() {
@@ -208,8 +215,10 @@ function initGSAP() {
     );
 }
 
-// Text Splitter (moved outside of DOMContentLoaded for performance)
-new SplitType("[split]", {
-  types: "lines, words, chars",
-  tagName: "span",
-});
+// Text Splitter
+if (isDesktop()) {
+  new SplitType("[split]", {
+    types: "lines, words, chars",
+    tagName: "span",
+  });
+}
