@@ -5,11 +5,8 @@ document.addEventListener("DOMContentLoaded", () => {
     .querySelectorAll("[notFlash]")
     .forEach((el) => el.removeAttribute("notFlash"));
 
-  // Check if the device is desktop
-  if (window.matchMedia("(min-width: 1024px)").matches) {
-    // Initialize GSAP animations only for desktop
-    initGSAP();
-  }
+  // Initialize GSAP animations
+  initGSAP();
 });
 
 function initGSAP() {
