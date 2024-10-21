@@ -40,4 +40,9 @@ function initGSAP() {
       start: "top center",
     }
   });
-}
+};
+
+let typeSplit = new SplitType("[split]", {
+  types: "lines, words, chars",
+  tagName: "span",
+});
