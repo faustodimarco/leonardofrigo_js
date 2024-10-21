@@ -5,8 +5,11 @@ document.addEventListener("DOMContentLoaded", () => {
     .querySelectorAll("[notFlash]")
     .forEach((el) => el.removeAttribute("notFlash"));
 
-  // Initialize GSAP animations
-  initGSAP();
+  // Check if the device is desktop
+  if (window.matchMedia("(min-width: 1024px)").matches) {
+    // Initialize GSAP animations only for desktop
+    initGSAP();
+  }
 });
 
 function initGSAP() {
@@ -72,30 +75,6 @@ function initGSAP() {
       start: "top top",
       toggleActions: "play none none reverse",
     },
-  });
-
-  // Navbar Color Change
-  const colorThemes = {
-    1: {
-      /* light theme colors */
-    },
-    2: {
-      /* dark theme colors */
-    },
-  };
-
-  document.querySelectorAll("section[data-theme]").forEach((section) => {
-    ScrollTrigger.create({
-      trigger: section,
-      start: "top top",
-      end: "bottom top",
-      onToggle: ({ isActive }) => {
-        if (isActive) {
-          const theme = section.dataset.theme === "dark" ? 2 : 1;
-          gsap.to(".navbar", { ...colorThemes[theme], duration: 0.3 });
-        }
-      },
-    });
   });
 
   // Reusable animation function
@@ -259,4 +238,3 @@ new SplitType("[split]", {
   types: "lines, words, chars",
   tagName: "span",
 });
-
