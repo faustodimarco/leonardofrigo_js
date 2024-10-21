@@ -36,8 +36,8 @@ function initGSAP() {
     duration: defaults.durationFast,
     ease: defaults.ease,
     scrollTrigger: {
-      trigger: $(this),
-      start: center top,
+      trigger: "[animation=hero_img]",
+      start: "center top",
     }
-  }
+  });
 }
