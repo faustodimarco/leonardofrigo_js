@@ -47,7 +47,7 @@ function initGSAP() {
   const s02Tl = gsap.timeline({
     scrollTrigger: {
       trigger: "[trigger=nav]",
-      start: "top top",
+      start: "center top",
     },
   });
 
