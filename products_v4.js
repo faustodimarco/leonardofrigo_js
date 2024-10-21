@@ -29,4 +29,15 @@ function initGSAP() {
       stagger: defaults.stagger,
     });
   });
+  
+  gsap.from("[animation=hero_img]", {
+    opacity: 0,
+    y: "30%",
+    duration: defaults.durationFast,
+    ease: defaults.ease,
+    scrollTrigger: {
+      trigger: $(this),
+      start: center top,
+    }
+  }
 }
