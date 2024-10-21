@@ -37,7 +37,7 @@ function initGSAP() {
     ease: defaults.ease,
     scrollTrigger: {
       trigger: "[animation=hero_img]",
-      start: "center top",
+      start: "top center",
     }
   });
 }
