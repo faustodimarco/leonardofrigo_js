@@ -50,20 +50,9 @@ function initGSAP() {
   const s02Tl = gsap.timeline({
     scrollTrigger: {
       trigger: "[trigger=nav]",
-      start: "center top",
+      start: "top top",
     },
   });
-
-  s02Tl.fromTo(
-    "[animation=brd01]",
-    { clipPath: "polygon(0 0, 0 0, 0 100%, 0 100%)" },
-    {
-      clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
-      duration: defaults.durationFast,
-      ease: defaults.ease,
-    },
-    0
-  );
 
   // Navbar Animation
   gsap.from(".navbar-w", {
@@ -72,7 +61,7 @@ function initGSAP() {
     ease: defaults.ease,
     scrollTrigger: {
       trigger: "[trigger=nav]",
-      start: "top top",
+      start: "center top",
       toggleActions: "play none none reverse",
     },
   });
