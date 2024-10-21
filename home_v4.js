@@ -211,17 +211,6 @@ function initGSAP() {
     );
 }
 
-// Slick Slider initialization (moved outside of DOMContentLoaded for performance)
-$("#material_slick").slick({
-  infinite: true,
-  slidesToShow: 1,
-  swipe: true,
-  arrows: false,
-  swipeToSlide: true,
-  autoplay: true,
-  autoplaySpeed: 1000,
-});
-
 // Text Splitter (moved outside of DOMContentLoaded for performance)
 new SplitType("[split]", {
   types: "lines, words, chars",
