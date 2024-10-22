@@ -1,12 +1,18 @@
+function isDesktop() {
+  return window.matchMedia("(min-width: 1024px)").matches;
+}
+
 // Wait for DOM content to be loaded
 document.addEventListener("DOMContentLoaded", () => {
-  // Remove 'notFlash' attribute
-  document
-    .querySelectorAll("[notFlash]")
-    .forEach((el) => el.removeAttribute("notFlash"));
-  
-  // Initialize GSAP animations
-  initGSAP();
+  if (isDesktop()) {
+    // Remove 'notFlash' attribute
+    document
+      .querySelectorAll("[notFlash]")
+      .forEach((el) => el.removeAttribute("notFlash"));
+    
+    // Initialize GSAP animations
+    initGSAP();
+  }
 });
 
 function initGSAP() {
@@ -17,7 +23,7 @@ function initGSAP() {
     durationNavbar: 0.25,
     ease: "power1.out",
   };
-
+  
   // Hero Heading & Paragraph Animation
   const heroTl = gsap.timeline({ delay: 0.25 });
   ["hero_h", "hero_p"].forEach((selector) => {
@@ -40,9 +46,12 @@ function initGSAP() {
       start: "top center",
     }
   });
-};
+}
 
-let typeSplit = new SplitType("[split]", {
-  types: "lines, words, chars",
-  tagName: "span",
-});
+// Text Splitter - only initialize on desktop
+if (isDesktop()) {
+  let typeSplit = new SplitType("[split]", {
+    types: "lines, words, chars",
+    tagName: "span",
+  });
+}
