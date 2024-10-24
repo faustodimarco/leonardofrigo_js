@@ -44,7 +44,6 @@ function initGSAP() {
     scrollTrigger: {
       trigger: "[animation=hero_img]",
       start: "top center",
-      markers: true,
     }
   });
 }
